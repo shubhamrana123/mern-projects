@@ -129,30 +129,30 @@ app.put("/updateUser",async (req:any,res:any)=>{
     
   }
 })
-app.post('/createUser', async (req:any,res:any)=>{
-  console.log('reqBody',req.body);
+// app.post('/createUser', async (req:any,res:any)=>{
+//   console.log('reqBody',req.body);
   
-  try{
-    const userList1 = req.body
-const userList2= new User(
-userList1
-)
-const result = await userList2.save()
-// const userList2 = new User(
-//   {
-//   name:'anirudh',
-//   email:'ani@xyz',
-//   id:3232344343
-// }
+//   try{
+//     const userList1 = req.body
+// const userList2= new User(
+// userList1
 // )
-// const result =  await User.insertMany([userList1,userList2])
-console.log('result',result);
+// const result = await userList2.save()
+// // const userList2 = new User(
+// //   {
+// //   name:'anirudh',
+// //   email:'ani@xyz',
+// //   id:3232344343
+// // }
+// // )
+// // const result =  await User.insertMany([userList1,userList2])
+// console.log('result',result);
 
-  }catch(err:any){
-    console.log(err);
+//   }catch(err:any){
+//     console.log(err);
     
-  }
-})
+//   }
+// })
 app.listen(4001, () => {
   console.log("listening to port 4001");
 });
@@ -187,12 +187,17 @@ app.get('/getPlan', async(req:any,response:any)=>{
   // res.send(JSON.stringify(planList))
   // console.log('userlist',planList)
 })
-app.post('/createProduct',(req:any,response:any)=>{
+app.post('/createUser',(req:any,response:any)=>{
+  console.log('req',req.body);
+  
   const {id,name,description,price} = req.body
-  client.query(`insert into product (id,name,description,price) values(34,'iphone','iphone 14',100000)`,[id,name,description,price], (err:any,res:any)=>{
-if(!err){
-  response.send("success")
-}
+  console.log("id",id);
+  
+  client.query(`insert into product (id,name,description,price) values(${id},${name},${description},${price})`,[id,name,description,price], (err:any,res:any)=>{
+console.log('postresponse',res);
+
+  response.json(res)
+
   
   })
 })
