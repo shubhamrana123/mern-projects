@@ -108,27 +108,27 @@ app.get("/", async (req: any, res: any) => {
   res.send(userList);
   //   res.end('Success')
 });
-app.put("/updateUser",async (req:any,res:any)=>{
-  console.log('req',req.body);
-  const reqData = req.body
-  try {
+// app.put("/updateUser",async (req:any,res:any)=>{
+//   console.log('req',req.body);
+//   const reqData = req.body
+//   try {
 
     
-    const result  =  await User.updateOne({_id:"64ca4c61d413c8993dae5a5a"},{
-      $set:{
-        name:reqData?.name
-      }
-    })
-    console.log(result);
-    if(result){
-      res.send({"response":"success"})
-    }
+//     const result  =  await User.updateOne({_id:"64ca4c61d413c8993dae5a5a"},{
+//       $set:{
+//         name:reqData?.name
+//       }
+//     })
+//     console.log(result);
+//     if(result){
+//       res.send({"response":"success"})
+//     }
     
-  } catch (error) {
-    console.log(error);
+//   } catch (error) {
+//     console.log(error);
     
-  }
-})
+//   }
+// })
 // app.post('/createUser', async (req:any,res:any)=>{
 //   console.log('reqBody',req.body);
   
@@ -193,12 +193,34 @@ app.post('/createUser',(req:any,response:any)=>{
   const {id,name,description,price} = req.body
   console.log("id",id);
   
-  client.query(`insert into product (id,name,description,price) values(${id},${name},${description},${price})`,[id,name,description,price], (err:any,res:any)=>{
+  client.query(`insert into product (id,name,description,price) values($1, $2, $3,$4)`,[id,name,description,price], (err:any,res:any)=>{
 console.log('postresponse',res);
+console.log('error',err);
 
   response.json(res)
 
   
+  })
+})
+app.put('/updateUser',(req:any,response:any)=>{
+  console.log('put req',req.body);
+  console.log('param req',req.params);
+  const {id,name ,description,price} = req.body
+  client.query(`update product set name = $1,price=$2 where id= $3`,[name,price,id],(err:any,res:any)=>{
+    console.log('put res',res);
+    response.json(res)
+    
+  })
+})
+app.delete('/deleteUser',(req:any,response:any)=>{
+  const {id} = req.params
+  // const id = req.params
+  console.log('parseint',id);
+  console.log('id',req.body);
+  
+  
+  client.query(`delete from product where id= $1`, [id],(err:any,res:any)=>{
+    response.json(res)
   })
 })
 const getAllUsers = () =>{
