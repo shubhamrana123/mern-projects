@@ -1,0 +1,4 @@
+export const START_LOADING = 'START_LOADING';
+export const STOP_LOADING = 'STOP_LOADING';
+export const IS_ERROR = 'IS_ERROR';
+export const IS_ERRORMESSAGE  = 'IS_ERRORMESSAGE'
