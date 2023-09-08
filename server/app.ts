@@ -106,6 +106,8 @@ app.get("/", async (req: any, res: any) => {
   console.log(JSON.stringify(userList));
 
   res.send(userList);
+  console.log('ddf');
+  
   //   res.end('Success')
 });
 // app.put("/updateUser",async (req:any,res:any)=>{
